@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class DetailPageKost extends StatelessWidget {
   final String name;
@@ -9,8 +8,8 @@ class DetailPageKost extends StatelessWidget {
   final String price;
   final String gender;
   final String facilities;
-  final String ownerId;
   final String phoneNumber;
+  final String ownerID;
 
   const DetailPageKost({
     Key? key,
@@ -21,8 +20,8 @@ class DetailPageKost extends StatelessWidget {
     required this.price,
     required this.gender,
     required this.facilities,
-    required this.ownerId,
     required this.phoneNumber,
+    required this.ownerID,
   }) : super(key: key);
 
   @override
@@ -30,7 +29,7 @@ class DetailPageKost extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Detail Kost',
+          'Detail Kos',
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
@@ -61,6 +60,13 @@ class DetailPageKost extends StatelessWidget {
                 height: 200,
                 width: double.infinity,
                 fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    height: 200,
+                    color: Colors.grey[300],
+                    child: Icon(Icons.broken_image, size: 50),
+                  );
+                },
               ),
             ),
             SizedBox(height: 16),
@@ -68,7 +74,7 @@ class DetailPageKost extends StatelessWidget {
             // Description Card
             _buildInfoCard(
               icon: Icons.description,
-              title: 'Description',
+              title: 'Deskripsi Kos',
               content: description,
             ),
             SizedBox(height: 8),
@@ -76,7 +82,7 @@ class DetailPageKost extends StatelessWidget {
             // Address Card
             _buildInfoCard(
               icon: Icons.location_on,
-              title: 'Address',
+              title: 'Alamat',
               content: address,
             ),
             SizedBox(height: 8),
@@ -84,19 +90,19 @@ class DetailPageKost extends StatelessWidget {
             // Price Card
             _buildInfoCard(
               icon: Icons.attach_money,
-              title: 'Price',
-              content: 'IDR $price',
+              title: 'Harga',
+              content: 'Rp $price',
             ),
             SizedBox(height: 8),
 
             // Gender Card
             _buildInfoCard(
-              icon: gender == 'Boy'
+              icon: gender == 'Laki - Laki'
                   ? Icons.male
-                  : gender == 'Girl'
+                  : gender == 'Perempuan'
                   ? Icons.female
                   : Icons.people,
-              title: 'Gender',
+              title: 'Jenis Kelamin',
               content: gender,
             ),
             SizedBox(height: 8),
@@ -104,24 +110,24 @@ class DetailPageKost extends StatelessWidget {
             // Facilities Card
             _buildInfoCard(
               icon: Icons.room_preferences,
-              title: 'Facilities',
+              title: 'Fasilitas',
               content: facilities,
-            ),
-            SizedBox(height: 8),
-
-            // Owner ID Card
-            _buildInfoCard(
-              icon: Icons.perm_identity,
-              title: 'Owner ID',
-              content: ownerId,
             ),
             SizedBox(height: 8),
 
             // Phone Number Card
             _buildInfoCard(
               icon: Icons.phone,
-              title: 'Phone Number',
+              title: 'Nomor Telepon',
               content: phoneNumber,
+            ),
+            SizedBox(height: 8),
+
+            // Owner ID Card
+            _buildInfoCard(
+              icon: Icons.account_circle,
+              title: 'Owner ID',
+              content: ownerID,
             ),
             SizedBox(height: 16),
           ],

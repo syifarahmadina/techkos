@@ -9,25 +9,183 @@ class KostListPage extends StatefulWidget {
 
 class _KostListPageState extends State<KostListPage> {
   TextEditingController _searchController = TextEditingController();
-  String _selectedGender = 'All';
-  String _selectedFacility = 'All';
-  String _priceFilter = 'None';
-  List<String> _facilities = ['WiFi', 'AC', 'Parking'];
+  String _selectedGender = 'Semua';
+  String _selectedFacility = 'Semua';
+  String _priceFilter = 'Tidak Ada';
+  List<String> facilities = ['WiFi', 'AC', 'Kipas', 'Kulkas', 'Kamar Mandi Dalam', 'Kamar Mandi Luar', 'Parkir'];
   bool _isFilterApplied = false;
 
   // Sample data with the provided image URL
-  List<Map<String, dynamic>> _kostList = List.generate(10, (index) {
-    return {
-      'name': 'Kost ${index + 1}',
-      'price': (index * 50000 + 100000).toString(),
-      'gender': index % 2 == 0 ? 'Boy' : 'Girl',
-      'facility': 'WiFi, AC',
-      'image': 'https://binabangunbangsa.com/wp-content/uploads/2020/03/tips-Manajemen-Rumah-Kost-yang-Baik-dan-Benar-.jpg',
-      'description': 'A cozy and affordable kost with great facilities.',
-      'address': 'Jl. Example ${index + 1}, City',
-      'isFavorite': false,
-    };
-  });
+  List<Map<String, dynamic>> _kostList = [
+  {
+  'name': 'Wisma Damai 1',
+  'price': '5500000',
+  'gender': 'Laki - Laki, Perempuan',
+  'facility': 'Kamar Mandi Dalam, Kulkas, WiFi',
+  'image': 'https://drive.google.com/uc?id=1QFQTIHt-eCREKLSSYtxltwfPyD0JeZqG',
+  'description': 'Kost yang nyaman tenang, dekat dengan kampus, dan dikelilingi penjual makanan.',
+  'address': 'RT. 02, RW. 03, Dusun 2, Desa Blater, Kecamatan Kalimanah, Purbalingga',
+  'phoneNumber': '081327375251',
+  'ownerID': 1001,
+  'isFavorite': false,
+  },
+  {
+  'name': 'Kost Blater 34',
+  'price': '5000000',
+  'gender': 'Laki - Laki',
+  'facility': 'Kamar Mandi Dalam, Kulkas, WiFi',
+  'image': 'https://drive.google.com/uc?id=1P2VckvwEpJYFMTxlC1FUh1Po2UqgEkdC',
+  'description': 'Kost yang nyaman tenang, dekat dengan kampus, dan dikelilingi penjual makanan.',
+  'address': 'RT. 03, RW. 03, Dusun 2, Desa Blater, Kecamatan Kalimanah, Purbalingga',
+  'phoneNumber': '085290836595',
+  'ownerID': 1002,
+  'isFavorite': false,
+  },
+  {
+  'name': 'Kost Barokah',
+  'price': '5000000',
+  'gender': 'Laki - Laki, Perempuan',
+  'facility': 'Kamar Mandi Dalam, WiFi',
+  'image': '',  // Provide image URL if available
+  'description': 'Kost yang dekat dengan kampus, lapangan blater, dan juga tukang nasi goreng.',
+  'address': 'RT. 03, RW. 03, Dusun 2, Desa Blater, Kecamatan Kalimanah, Purbalingga',
+  'phoneNumber': '081231042593',
+  'ownerID': 1003,
+  'isFavorite': false,
+  },
+  {
+  'name': 'Daisy Kost',
+  'price': '6000000',
+  'gender': 'Perempuan',
+  'facility': 'Kamar Mandi Dalam, Kulkas, WiFi',
+  'image': '',  // Provide image URL if available
+  'description': 'Kost yang tidak dekat jalan utama sehingga memberikan kenyamanan dan keamanan yang baik.',
+  'address': 'RT. 01, RW. 03, Dusun 2, Desa Blater, Kecamatan Kalimanah, Purbalingga',
+  'phoneNumber': '085786000032',
+  'ownerID': 1004,
+  'isFavorite': false,
+  },
+  {
+  'name': 'Kost Putra Bidan Yeti',
+  'price': '5000000',
+  'gender': 'Laki - Laki',
+  'facility': 'Kamar Mandi Dalam, Wifi',
+  'image': '',  // Provide image URL if available
+  'description': 'Kost yang berada dekat perumahan warga sehingga memberikan kesan yang homy.',
+  'address': 'RT. 02, RW. 03, Dusun 2, Desa Blater, Kecamatan Kalimanah, Purbalingga',
+  'phoneNumber': '082169772574',
+  'ownerID': 1005,
+  'isFavorite': false,
+  },
+  {
+  'name': 'Wisma Alden',
+  'price': '5500000',
+  'gender': 'Perempuan',
+  'facility': 'Kamar Mandi Dalam, Kulkas, WiFi, Parkir',
+  'image': '',  // Provide image URL if available
+  'description': 'Kost yang memiliki banyak kamar, parkir luas, dan terdapat warung makan di dalam kawasan kost.',
+  'address': 'RT. 02, RW. 03, Dusun 2, Desa Blater, Kecamatan Kalimanah, Purbalingga',
+  'phoneNumber': '082122415204',
+  'ownerID': 1006,
+  'isFavorite': false,
+  },
+  {
+  'name': 'Wisma Yolanda',
+  'price': '4500000',
+  'gender': 'Laki - Laki',
+  'facility': 'Kamar Mandi Luar Kulkas, WiFi, Parkir',
+  'image': '',  // Provide image URL if available
+  'description': 'Kost yang cukup dekat dengan kampus, masih berada di jalan utama dan memiliko bangunan yang baru.',
+  'address': 'RT. 01, RW. 03, Dusun 2, Desa Blater, Kecamatan Kalimanah, Purbalingga',
+  'phoneNumber': '082242157793',
+  'ownerID': 1007,
+  'isFavorite': false,
+  },
+  {
+  'name': 'Kosbin Blater',
+  'price': '6500000',
+  'gender': 'Perempuan',
+  'facility': 'Kamar Mandi Dalam, Kulkas, WiFi, Parkir',
+  'image': '',  // Provide image URL if available
+  'description': 'Kost dengan bangunan baru, memiliki parkiran yang cukup luas, dan berada di jalan utama.',
+  'address': 'RT. 01, RW. 03, Dusun 2, Desa Blater, Kecamatan Kalimanah, Purbalingga',
+  'phoneNumber': '081379524663',
+  'ownerID': 1008,
+  'isFavorite': false,
+  },
+  {
+  'name': 'Widya Kost',
+  'price': '6000000',
+  'gender': 'Perempuan',
+  'facility': 'Kamar Mandi Dalam, Kulkas, WiFi',
+  'image': '',  // Provide image URL if available
+  'description': 'Kost khusus perempuan dan tidak memiliki banyak kamar sehingga membuat penghuni terasa tenang dan nyaman.',
+  'address': 'RT. 01, RW. 03, Dusun 2, Desa Blater, Kecamatan Kalimanah, Purbalingga',
+  'phoneNumber': '0821743888396',
+  'ownerID': 1009,
+  'isFavorite': false,
+  },
+  {
+  'name': 'Rumah Kost Perwira',
+  'price': '4500000',
+  'gender': 'Perempuan',
+  'facility': 'Kamar Mandi Luar, WiFi',
+  'image': '',  // Provide image URL if available
+  'description': 'Kost yang berada cukup jauh dari jalan utama sehingga memberikan kesan nyaman dan tenang.',
+  'address': 'RT. 02, RW. 01, Dusun 1, Desa Blater, Kecamatan Kalimanah, Purbalingga',
+  'phoneNumber': '08529083659',
+  'ownerID': 1010,
+  'isFavorite': false,
+  },
+  {
+  'name': 'Wisma Ashie',
+  'price': '5000000',
+  'gender': 'Laki - Laki',
+  'facility': 'Kamar Mandi Dalam, Kulkas, WiFi, Parkir',
+  'image': '',  // Provide image URL if available
+  'description': 'Kost dengan bangunan baru serta memiliki halaman parkir yang luas.',
+  'address': 'RT. 01, RW. 02, Dusun 1, Desa Blater, Kecamatan Kalimanah, Purbalingga',
+  'phoneNumber': '082254869322',
+  'ownerID': 1011,
+  'isFavorite': false,
+  },
+  {
+  'name': 'Kost Bp. Safari Dy',
+  'price': '5000000',
+  'gender': 'Perempuan',
+  'facility': 'Kamar Mandi Dalam, Kulkas, WiFi',
+  'image': '',  // Provide image URL if available
+  'description': 'Kost yang seperti rumah sendiri sehingga memberikan kesan nyaman.',
+  'address': 'RT. 02, RW. 01, Dusun 1, Desa Blater, Kecamatan Kalimanah, Purbalingga',
+  'phoneNumber': '082159337149',
+  'ownerID': 1012,
+  'isFavorite': false,
+  },
+  {
+  'name': 'Kost Griya Dara',
+  'price': '5000000',
+  'gender': 'Perempuan',
+  'facility': 'Kamar Mandi Dalam, WiFi',
+  'image': '',  // Provide image URL if available
+  'description': 'Kost yang berada di sekitar perumahan warga dan dekat dengan masjid.',
+  'address': 'RT. 01, RW. 01, Dusun 1, Desa Blater, Kecamatan Kalimanah, Purbalingga',
+  'phoneNumber': '082163584771',
+  'ownerID': 1013,
+  'isFavorite': false,
+  },
+  {
+  'name': 'Kost Bu Dapin',
+  'price': '5000000',
+  'gender': 'Laki - Laki',
+  'facility': 'Kamar Mandi Dalam, WiFi, Parkir',
+  'image': '',  // Provide image URL if available
+  'description': 'Kost dengan fasilitas lengkap, tempat tinggal yang nyaman.',
+  'address': 'RT. 02, RW. 01, Dusun 1, Desa Blater, Kecamatan Kalimanah, Purbalingga',
+  'phoneNumber': '085298372636',
+  'ownerID': 1014,
+  'isFavorite': false,
+  },
+  ];
 
   List<Map<String, dynamic>> _applyFilters() {
     List<Map<String, dynamic>> filteredList = _kostList.where((kost) {
@@ -35,16 +193,16 @@ class _KostListPageState extends State<KostListPage> {
           .toLowerCase()
           .contains(_searchController.text.toLowerCase());
       bool matchesGender =
-          _selectedGender == 'All' || kost['gender'] == _selectedGender;
+          _selectedGender == 'Semua' || kost['gender'] == _selectedGender;
       bool matchesFacility =
-          _selectedFacility == 'All' || kost['facility']!.contains(_selectedFacility);
+          _selectedFacility == 'Semua' || kost['facility']!.contains(_selectedFacility);
       return matchesSearch && matchesGender && matchesFacility;
     }).toList();
 
     // Apply price sorting
-    if (_priceFilter == 'Low to High') {
+    if (_priceFilter == 'Termurah ke Termahal') {
       filteredList.sort((a, b) => int.parse(a['price']!).compareTo(int.parse(b['price']!)));
-    } else if (_priceFilter == 'High to Low') {
+    } else if (_priceFilter == 'Termahal ke Termurah') {
       filteredList.sort((a, b) => int.parse(b['price']!).compareTo(int.parse(a['price']!)));
     }
 
@@ -59,9 +217,9 @@ class _KostListPageState extends State<KostListPage> {
 
   void _clearFilters() {
     setState(() {
-      _selectedGender = 'All';
-      _selectedFacility = 'All';
-      _priceFilter = 'None';
+      _selectedGender = 'Semua';
+      _selectedFacility = 'Semua';
+      _priceFilter = 'Tidak Ada';
       _isFilterApplied = false;
     });
   }
@@ -84,7 +242,7 @@ class _KostListPageState extends State<KostListPage> {
         ),
         centerTitle: true,
         title: Text(
-          'Find Your Kost',
+          'Temukan Kost Sesuai Pilihanmu',
           style: TextStyle(
             fontFamily: 'Roboto', // Changed font to Roboto
             fontWeight: FontWeight.w500,
@@ -114,7 +272,7 @@ class _KostListPageState extends State<KostListPage> {
                   child: TextField(
                     controller: _searchController,
                     decoration: InputDecoration(
-                      hintText: 'Search Kost...',
+                      hintText: 'Cari Kost ...',
                       prefixIcon: Icon(Icons.search, color: Colors.white),
                       filled: true,
                       fillColor: Colors.white.withOpacity(0.6),
@@ -156,8 +314,8 @@ class _KostListPageState extends State<KostListPage> {
                         price: kost['price']!,
                         gender: kost['gender']!,
                         facilities: kost['facility']!,
-                        ownerId: 'Owner ID',
-                        phoneNumber: '123-456-789',
+                        phoneNumber: kost ['phoneNumber']!,
+                        ownerID: kost ['Owner ID'].toString(),
                       ));
                     },
                     child: Card(
@@ -228,7 +386,7 @@ class _KostListPageState extends State<KostListPage> {
                                   children: [
                                     Icon(Icons.attach_money, color: Colors.green, size: 18),
                                     SizedBox(width: 5),
-                                    Text("Price: IDR ${kost['price']}"),
+                                    Text("Harga: Rp ${kost['price']}"),
                                   ],
                                 ),
                                 SizedBox(height: 5),
@@ -236,7 +394,7 @@ class _KostListPageState extends State<KostListPage> {
                                   children: [
                                     Icon(Icons.person, color: Colors.blue, size: 18),
                                     SizedBox(width: 5),
-                                    Text("Gender: ${kost['gender']}"),
+                                    Text("Jenis Kelamin: ${kost['gender']}"),
                                   ],
                                 ),
                                 SizedBox(height: 5),
@@ -244,7 +402,7 @@ class _KostListPageState extends State<KostListPage> {
                                   children: [
                                     Icon(Icons.check_circle, color: Colors.orange, size: 18),
                                     SizedBox(width: 5),
-                                    Text("Facilities: ${kost['facility']}"),
+                                    Text("Fasilitas: ${kost['facility']}"),
                                   ],
                                 ),
                               ],
@@ -268,12 +426,12 @@ class _KostListPageState extends State<KostListPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Apply Filters"),
+          title: Text("Cari Sesuai Kriteria"),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               // Gender filter
-              Text("Select Gender Filter"),
+              Text("Berdasarkan Jenis Kelamin"),
               DropdownButton<String>(
                 value: _selectedGender,
                 onChanged: (String? newValue) {
@@ -283,7 +441,7 @@ class _KostListPageState extends State<KostListPage> {
                   });
                   Navigator.of(context).pop();
                 },
-                items: <String>['All', 'Boy', 'Girl']
+                items: <String>['Semua', 'Laki - Laki', 'Perempuan']
                     .map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
@@ -293,7 +451,7 @@ class _KostListPageState extends State<KostListPage> {
               ),
               SizedBox(height: 10),
               // Facility filter
-              Text("Select Facility Filter"),
+              Text("Berdasarkan Fasilitas"),
               DropdownButton<String>(
                 value: _selectedFacility,
                 onChanged: (String? newValue) {
@@ -303,7 +461,7 @@ class _KostListPageState extends State<KostListPage> {
                   });
                   Navigator.of(context).pop();
                 },
-                items: <String>['All', 'WiFi', 'AC', 'Parking']
+                items: <String>['Semua', 'WiFi', 'AC', 'Kipas', 'Kulkas', 'Kamar Mandi Dalam', 'Kamar Mandi Luar', 'Parkir']
                     .map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
@@ -313,7 +471,7 @@ class _KostListPageState extends State<KostListPage> {
               ),
               SizedBox(height: 10),
               // Price filter
-              Text("Select Price Filter"),
+              Text("Berdasarkan Harga"),
               DropdownButton<String>(
                 value: _priceFilter,
                 onChanged: (String? newValue) {
@@ -323,7 +481,7 @@ class _KostListPageState extends State<KostListPage> {
                   });
                   Navigator.of(context).pop();
                 },
-                items: <String>['None', 'Low to High', 'High to Low']
+                items: <String>['Tidak Ada', 'Termurah ke Termahal', 'Termahal ke Termurah']
                     .map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,

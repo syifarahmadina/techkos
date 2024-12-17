@@ -1,111 +1,91 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../models/user_model.dart';
-import '../services/auth_service.dart';
 
 class AuthController extends GetxController {
-  final nameController = TextEditingController();
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-  RxString userType = ''.obs; // Start with an empty string, indicating no user type is selected yet
-  final AuthService _authService = AuthService();
+  var userRole = "".obs; // Track the user's role
+  var userType = ''.obs; // Track the selected user type (Student or Owner)
 
-  // Set the selected user type (either 'student' or 'owner')
+  // Controllers for login form
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
+
+  // Hardcoded credentials for testing
+  final String studentEmail = 'joshua@gmail.com';
+  final String studentPassword = 'joshua123';
+  final String ownerEmail = 'bibi@gmail.com';
+  final String ownerPassword = 'bibi23';
+
+  // Set the user type for registration (Student or Owner)
   void setUserType(String? value) {
-    if (value != null) userType.value = value; // Update the userType reactively
+    userType.value = value ?? '';
   }
 
-  // Register method (already implemented)
-  Future<void> register() async {
+  // Login function
+  void login() {
+    // Ensure user type is selected
     if (userType.value.isEmpty) {
-      // Make sure userType is selected before proceeding
-      Get.snackbar(
-        'Error',
-        'Please select your user type!',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      Get.snackbar('Error', 'Please select a user type',
+          backgroundColor: Colors.red, colorText: Colors.white);
       return;
     }
 
-    try {
-      final user = UserModel(
-        name: nameController.text.trim(),
-        email: emailController.text.trim(),
-        password: passwordController.text.trim(),
-      );
+    // Check if email and password are filled
+    if (emailController.text.isEmpty || passwordController.text.isEmpty) {
+      Get.snackbar('Error', 'Please fill in all fields',
+          backgroundColor: Colors.red, colorText: Colors.white);
+      return;
+    }
 
-      final response = await _authService.register(user, userType.value); // Pass userType.value to the service
-
-      Get.snackbar(
-        'Success',
-        response['message'] ?? 'Registered successfully',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.green,
-        colorText: Colors.white,
-      );
-
-      nameController.clear();
-      emailController.clear();
-      passwordController.clear();
-    } catch (e) {
-      Get.snackbar(
-        'Error',
-        e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+    // Match credentials for Student
+    if (emailController.text == studentEmail &&
+        passwordController.text == studentPassword &&
+        userType.value == "Mahasiswa") {
+      userRole.value = "Mahasiswa";
+      Get.offNamed('/student_home'); // Navigate to Student Home
+    }
+    // Match credentials for Owner
+    else if (emailController.text == ownerEmail &&
+        passwordController.text == ownerPassword &&
+        userType.value == "Pemilik Kos") {
+      userRole.value = "Pemilik Kos";
+      Get.offNamed('/owner_home'); // Navigate to Owner Home
+    }
+    // Invalid credentials or mismatched user type
+    else {
+      Get.snackbar('Error', 'Invalid email, password, or user type',
+          backgroundColor: Colors.red, colorText: Colors.white);
     }
   }
 
-  // Add a login method to handle user login
-  Future<void> login() async {
-    try {
-      final user = UserModel(
-        email: emailController.text.trim(),
-        password: passwordController.text.trim(),
-        name: '', // Name is optional for login
-      );
-
-      final response = await _authService.login(user, userType.value); // Pass userType.value to the service
-
-      if (response['success']) {
-        // Navigate to the appropriate page based on the user type
-        if (userType.value == 'student') {
-          Get.offAllNamed('/studentHome');
-        } else if (userType.value == 'owner') {
-          Get.offAllNamed('/ownerHome');
-        }
-
-        // Optionally show a success message
-        Get.snackbar(
-          'Success',
-          'Login successful!',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.green,
-          colorText: Colors.white,
-        );
-      } else {
-        // Handle failure (e.g., incorrect login credentials)
-        Get.snackbar(
-          'Error',
-          response['message'] ?? 'Login failed',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
-      }
-    } catch (e) {
-      // Handle any errors that occur during login
-      Get.snackbar(
-        'Error',
-        e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+  // Register function
+  void register() {
+    // Ensure user type is selected
+    if (userType.value.isEmpty) {
+      Get.snackbar('Error', 'Please select a user type',
+          backgroundColor: Colors.red, colorText: Colors.white);
+      return;
     }
+
+    // Check if all fields are filled
+    if (nameController.text.isEmpty ||
+        emailController.text.isEmpty ||
+        passwordController.text.isEmpty ||
+        confirmPasswordController.text.isEmpty) {
+      Get.snackbar('Error', 'Please fill in all fields',
+          backgroundColor: Colors.red, colorText: Colors.white);
+      return;
+    }
+
+    // Check if passwords match
+    if (passwordController.text != confirmPasswordController.text) {
+      Get.snackbar('Error', 'Passwords do not match',
+          backgroundColor: Colors.red, colorText: Colors.white);
+      return;
+    }
+
+    // Implement registration logic here
+    print('Registering as ${userType.value} with email ${emailController.text}');
   }
 }

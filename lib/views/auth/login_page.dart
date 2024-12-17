@@ -64,7 +64,7 @@ class LoginPage extends StatelessWidget {
                   SizedBox(height: 20),
                   // Welcome text
                   Text(
-                    'Welcome Back!',
+                    'Selamat Datang di TechKos',
                     style: GoogleFonts.poppins(
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
@@ -73,7 +73,7 @@ class LoginPage extends StatelessWidget {
                   ),
                   SizedBox(height: 10),
                   Text(
-                    'Log in to explore your dream kost.',
+                    'Log in untuk mencari kost sesuai kriteriamu!',
                     style: GoogleFonts.poppins(
                       fontSize: 16,
                       color: Colors.white70,
@@ -103,15 +103,15 @@ class LoginPage extends StatelessWidget {
                       children: [
                         // Dropdown for User Type
                         CustomDropdown(
-                          label: 'Login as',
-                          items: ['Student', 'Owner'],
+                          label: 'Login sebagai',
+                          items: ['Mahasiswa', 'Pemilik Kos'],
                           onChanged: authController.setUserType,
                         ),
                         SizedBox(height: 20),
                         // Email Field with Icon
                         CustomTextField(
                           label: 'Email',
-                          hintText: 'Enter your email',
+                          hintText: 'Masukkan Email Anda',
                           controller: authController.emailController,
                           prefixIcon: Icon(Icons.email_outlined, color: Colors.white),
                         ),
@@ -119,7 +119,7 @@ class LoginPage extends StatelessWidget {
                         // Password Field with Icon
                         CustomTextField(
                           label: 'Password',
-                          hintText: 'Enter your password',
+                          hintText: 'Masukkan Password Anda',
                           obscureText: true,
                           controller: authController.passwordController,
                           prefixIcon: Icon(Icons.lock_outline, color: Colors.white),
@@ -128,9 +128,7 @@ class LoginPage extends StatelessWidget {
                         // Login Button
                         CustomButton(
                           label: 'Login',
-                          onPressed: () {
-                            authController.login();  // Call the login method from AuthController
-                          },
+                          onPressed: authController.login,
                         ),
                       ],
                     ),
@@ -142,7 +140,7 @@ class LoginPage extends StatelessWidget {
                       Get.toNamed('/register');
                     },
                     child: Text(
-                      'Don’t have an account? Register here!',
+                      'Belum memiliki akun? ayo register disini!',
                       style: GoogleFonts.poppins(
                         fontSize: 16,
                         color: Colors.white,

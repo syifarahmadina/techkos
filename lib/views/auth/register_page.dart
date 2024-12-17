@@ -3,11 +3,12 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../controllers/auth_controller.dart';
+import '../../widgets/custom_dropdown.dart';
 import '../../widgets/custom_text_field.dart';
 import '../../widgets/custom_button.dart';
 
 class RegisterPage extends StatelessWidget {
-  final authController = Get.put(AuthController());
+  final AuthController authController = Get.put(AuthController());
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +64,7 @@ class RegisterPage extends StatelessWidget {
                   SizedBox(height: 20),
                   // Welcome text
                   Text(
-                    'Join Techkos!',
+                    'Ayo Register untuk Menggunakan Techkos!',
                     style: GoogleFonts.poppins(
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
@@ -72,7 +73,7 @@ class RegisterPage extends StatelessWidget {
                   ),
                   SizedBox(height: 10),
                   Text(
-                    'Sign up to find your perfect kost.',
+                    'Register untuk Menemukan Kost Sesuai Kriteriamu!',
                     style: GoogleFonts.poppins(
                       fontSize: 16,
                       color: Colors.white70,
@@ -100,72 +101,17 @@ class RegisterPage extends StatelessWidget {
                     ),
                     child: Column(
                       children: [
-                        // Custom Dropdown for User Type
-                        Obx(() {
-                          return GestureDetector(
-                            onTap: () {
-                              // Show the dropdown when tapped
-                              showModalBottomSheet(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return Container(
-                                    color: Colors.white,
-                                    padding: EdgeInsets.all(20),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        ListTile(
-                                          leading: Icon(Icons.school, color: Colors.blue),
-                                          title: Text('Student', style: GoogleFonts.poppins(fontSize: 18)),
-                                          onTap: () {
-                                            authController.setUserType('student');
-                                            Navigator.pop(context);
-                                          },
-                                        ),
-                                        ListTile(
-                                          leading: Icon(Icons.home, color: Colors.blue),
-                                          title: Text('Owner', style: GoogleFonts.poppins(fontSize: 18)),
-                                          onTap: () {
-                                            authController.setUserType('owner');
-                                            Navigator.pop(context);
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                },
-                              );
-                            },
-                            child: Container(
-                              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                              decoration: BoxDecoration(
-                                color: Colors.blue[50],
-                                borderRadius: BorderRadius.circular(8),
-                                border: Border.all(color: Colors.blue[200]!),
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    authController.userType.value.isEmpty
-                                        ? 'Select Role'
-                                        : authController.userType.value.capitalizeFirst!,
-                                    style: GoogleFonts.poppins(
-                                      color: Colors.black87,
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                  Icon(Icons.arrow_drop_down, color: Colors.blue),
-                                ],
-                              ),
-                            ),
-                          );
-                        }),
+                        // Dropdown for User Type
+                        CustomDropdown(
+                          label: 'Register sebagai',
+                          items: ['Mahasiswa', 'Pemilik Kos'],
+                          onChanged: authController.setUserType,
+                        ),
                         SizedBox(height: 20),
                         // Name Field with Icon
                         CustomTextField(
-                          label: 'Name',
-                          hintText: 'Enter your name',
+                          label: 'Nama',
+                          hintText: 'Ketik Nama Kamu',
                           controller: authController.nameController,
                           prefixIcon: Icon(Icons.person_outline, color: Colors.white),
                         ),
@@ -173,7 +119,7 @@ class RegisterPage extends StatelessWidget {
                         // Email Field with Icon
                         CustomTextField(
                           label: 'Email',
-                          hintText: 'Enter your email',
+                          hintText: 'Ketik Email Kamu',
                           controller: authController.emailController,
                           prefixIcon: Icon(Icons.email_outlined, color: Colors.white),
                         ),
@@ -181,7 +127,7 @@ class RegisterPage extends StatelessWidget {
                         // Password Field with Icon
                         CustomTextField(
                           label: 'Password',
-                          hintText: 'Enter your password',
+                          hintText: 'Ketik Password Kamu',
                           obscureText: true,
                           controller: authController.passwordController,
                           prefixIcon: Icon(Icons.lock_outline, color: Colors.white),
@@ -190,19 +136,7 @@ class RegisterPage extends StatelessWidget {
                         // Register Button
                         CustomButton(
                           label: 'Register',
-                          onPressed: () async {
-                            if (authController.userType.value.isNotEmpty) {
-                              await authController.register(); // Call register async method
-                            } else {
-                              Get.snackbar(
-                                'Error',
-                                'Please select your user type!',
-                                snackPosition: SnackPosition.BOTTOM,
-                                backgroundColor: Colors.red,
-                                colorText: Colors.white,
-                              );
-                            }
-                          },
+                          onPressed: authController.register,
                         ),
                       ],
                     ),
@@ -214,7 +148,7 @@ class RegisterPage extends StatelessWidget {
                       Get.toNamed('/login');
                     },
                     child: Text(
-                      'Already have an account? Login here!',
+                      'Sudah punya akun? Silahkan Login Disini!',
                       style: GoogleFonts.poppins(
                         fontSize: 16,
                         color: Colors.white,

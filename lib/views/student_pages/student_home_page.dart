@@ -56,7 +56,7 @@ class _StudentHomePageState extends State<StudentHomePage> {
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: "Kost List",
+            label: "List Kost",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.favorite),

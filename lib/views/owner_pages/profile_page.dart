@@ -41,21 +41,14 @@ class ProfilePage extends StatelessWidget {
                       children: [
                         CircleAvatar(
                           radius: 50,
-                          backgroundImage: AssetImage(
-                              'assets/images/profile_placeholder.png'),
+                          backgroundImage: NetworkImage('https://www.allkpop.com/upload/2024/11/content/191034/1732030443-85a7b37687101ff5e1792b2a88e382f4.jpg'),
                           child: Align(
                             alignment: Alignment.bottomRight,
-                            child: CircleAvatar(
-                              radius: 15,
-                              backgroundColor: Colors.white,
-                              child: Icon(Icons.camera_alt,
-                                  color: Colors.grey, size: 16),
-                            ),
                           ),
                         ),
                         SizedBox(height: 10),
                         Text(
-                          "Owner Name",
+                          "Bibi",
                           style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
@@ -63,7 +56,7 @@ class ProfilePage extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "owner@example.com",
+                          "bibi@gmail.com",
                           style: TextStyle(fontSize: 14, color: Colors.white70),
                         ),
                       ],
@@ -104,7 +97,7 @@ class ProfilePage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Text(
-                  "Keep your profile updated and explore with ease!",
+                  "Make Your Profile Keep Update!",
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
